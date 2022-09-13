@@ -1,0 +1,171 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{Numerical Analysis}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{September 16th, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+We review methods for finding roots of nonlinear functions such as fixed-point method and Newton's method. We will do a mix of coding and theory exercise. 
+
+This worksheet, and the demonstration code, can be found at \url{https://github.com/Empyreal092/NA_Worksheet}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.2\textwidth]{figs/Worksheet_git}
+\end{figure}
+
+
+\section{Fixed point methods}
+We want to find roots of the nonlinear equation
+\begin{align*}
+    f(x) := x^2-x-2 = 0
+\end{align*}
+using the fixed point method.
+
+\subsection{}
+Plot $f(x)$ in your favorite programming language. 
+\begin{enumerate}
+    \item Remember to add a title and axis labels to your plot.
+    \item Try to ``generalize'' your code. For example, if we want to plot another function, is it straightforward to edit your code to adapt to the new task?
+\end{enumerate}
+
+
+\subsection{}
+The problem has two roots. What are they? 
+
+\vspace{1cm}
+We will try to find the positive root ($x^*$) through the fixed point iteration of the form $x_{k+1} = g(x_k)$. We investigate two choices:
+\begin{itemize}
+    \item $g_1(x) = x^2-2$
+    \item $g_2(x) = \sqrt{x+2}$
+\end{itemize}
+
+\subsection{}\label{sec:1c}
+Verify that $x^*$ is indeed fixed points for the two functions. That is, $x^* = g(x^*)$. 
+\begin{enumerate}
+    \item You could verify this with a plot. (If there are two lines in a plot, put legends on them.)
+\end{enumerate}
+
+\subsection{}
+Will both choices work in the fixed point algorithm to find the root $x^*$? (Hint: consider the stability of the fixed point.)
+\begin{enumerate}
+    \item Could you determine the stability using the plot you made in \ref{sec:1c}?
+\end{enumerate}
+
+\subsection{}
+Implement the fixed point method for both choices of $g(x)$ above. 
+\begin{enumerate}
+    \item Set $x_0 = 5$.
+    \item What would be some good termination criteria for the fixed point algorithm?
+    \item Try to ``generalize'' your code. For example, what if we want to pick a new function $g(x)$?
+\end{enumerate}
+
+Now consider the convergence behavior of the stable fixed point algorithm. 
+
+\subsection{}
+From theory alone, how fast do you expect the convergence? (linear/superlinear/quadratic)? What is the expected convergence rate?
+
+\subsection{}
+Is this what your numerical results show? How do you verify the convergence behavior numerically? Try to show this with a plot. 
+\begin{enumerate}
+    \item Plot a representation of the error $|x_k-x^*|$ against iteration numbers. Which methods of plotting should we use? \texttt{plot}, \texttt{semilogy}, or \texttt{loglog}?
+    \item In more complicated examples we do not know $x^*$. What should we plot on the $y$-axis?
+    \item Did you remember to add a title and axis label to your plot?
+\end{enumerate}
+
+\subsection{}
+Could you diagnose the convergence rate numerically? Does it match the theoretical expectation?
+
+\subsection{}
+Is it possible to use $g_2(x)$ in the fixed-point iteration to find the negative root? Could we modify it so that it would work? In your spare time, you could verify the convergence behavior to the negative root as an exercises. 
+
+\newpage
+\section{Newton's method and roots with higher multiplicity}
+In the HW we have an example showing that Newton's method no longer converges quadratically if the root has higher than one multiplicity. We explore some more in this direction.
+
+We first define multiplicity: $r\in \mathbb{R}$ is a root of multiplicity $m$ for the equation $f(x)=0$ if there is a function $h(x)$ such that $h(r)\neq 0$ and $f(x) = (x-r)^m h(x)$.
+
+\subsection{}
+Suppose that a function $f$ has $m$ continuous derivative on the interval $(a,b)$ containing $c$ (i.e. $f(x)\in C^m_{(a,b)}$). Show that $f$ has a zero of multiplicity $m$ at $c$ if and only if
+\begin{align*}
+    0 = f(r) = f'(r) = \dots = f^{(m-1)}(r)
+\end{align*}
+and
+\begin{align*}
+    f^{m}(r) \neq 0.
+\end{align*}
+
+\subsection{}
+Suppose $r$ is a zero of multiplicity $m$ of $f$, and $f(x)\in C^m_{(a,b)}$, $r\in (a,b)$. Show that the following fixed-point method has $g'(r) = 0$:
+\begin{align*}
+    g(x) = x-m\frac{f(x)}{f'(x)}.
+\end{align*}
+What can you say about the convergence behavior of this fixed-point method?
+
+\subsection{}
+Code this modified Newton's method to solve $f(x) = x^2 = 0$. Check the convergence numerically. How do you plan to show this?
+
+\newpage
+\section{Some more tips about plotting}
+\subsection{}
+Size your figure so that they fit neatly onto a page without having to scale them in \LaTeX. 
+
+\subsection{}
+Exporting as vector images.
+
+\subsection{}
+Set desired behaviors as default.
+
+\vspace{1cm}
+My bag of MATLAB tools: \url{https://github.com/Empyreal092/MATLAB_Tool}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.2\textwidth]{figs/MATLAB_Tool_QR}
+\end{figure}
+
+
+
+    
+    
+% \bibliographystyle{alpha}
+% \bibliography{citation}
+
+
+\end{document}
