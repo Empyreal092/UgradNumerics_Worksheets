@@ -2,7 +2,7 @@ func_implicit = @(x) x.^2-x-2;
 
 %%
 % define x vector
-x = [-3:0.01:3];
+x = [-2:0.01:3];
 % calcualte y values
 y = func_implicit(x);
 
