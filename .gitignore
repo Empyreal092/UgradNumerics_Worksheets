@@ -70,19 +70,14 @@ Thumbs.db
 
 
 ###### Vids and pics ######
-*.png
+#*.png
 *.avi
 *.jpg
-#*.fig
+*.fig
 *.gif
 #*.eps
-
-#Data/
-
-!/green_run_dir/**
 
 *.aux
 *.out
 #*.pdf
 
-secret/

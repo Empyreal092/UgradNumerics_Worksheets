@@ -1,3 +1,4 @@
+%% Define implicit function
 g1 = @(x) x.^2-2;
 g2 = @(x) sqrt(x+2);
 

@@ -1,3 +1,4 @@
+%% Define implicit function
 func_implicit = @(x) x.^2-x-2;
 
 %%
@@ -22,7 +23,3 @@ ylabel("f(x)")
 title("Practice Plot")
 
 hold off
-
-%%
-figure
-plot(x,y);
