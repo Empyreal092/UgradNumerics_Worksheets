@@ -72,6 +72,13 @@ A = LU =
 \end{align*}
 
 \subsection{}
+MATLAB matrices creation and array indexing.
+\begin{enumerate}
+    \item Create matrix $A$ in your favorite coding language.
+    \item Print one element of the matrix via array indexing.
+\end{enumerate}
+
+\subsection{}
 In practical Gaussian elimination, the matrices $L_k$, are never formed and multiplied explicitly. The multipliers $\ell_{jk}$ are computed and stored directly into $L$, and the transformations $L_k$ are then applied implicitly \cite[p.151]{TrefethenBau_97}.
 
 \begin{enumerate}
@@ -125,7 +132,7 @@ We have the block matrix multiplication formula:
 \begin{array}{c|c} B_{11} & B_{12} \\\hline B_{21} & B_{22} \end{array} \right]
 = 
 \left[
-\begin{array}{c|c} A_{11}B_{11}+A_{12}B_{21} & A_{11}B_{12}+A_{12}B_{22} \\\hline A_{21}B_{11}+A_{22}B_{21} & A_{22}B_{12}+A_{22}B_{22} \end{array} \right]
+\begin{array}{c|c} A_{11}B_{11}+A_{12}B_{21} & A_{11}B_{12}+A_{12}B_{22} \\\hline A_{21}B_{11}+A_{22}B_{21} & A_{21}B_{12}+A_{22}B_{22} \end{array} \right]
 \end{align*}
 
 You could try to prove this at home. In session we will verify this formula numerically by creating examples of $A$ and $B$.
