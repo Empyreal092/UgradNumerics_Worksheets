@@ -9,14 +9,15 @@ y = func_implicit(x);
 
 %%
 % I'm plotting functions
-plot(x,y); hold on
-plot(x,x)
+plot(x,y,'DisplayName',"1"); hold on
+plot(x,x,'DisplayName',"2")
 % plot(x,zeros(1,length(x)))
-yline(0)
-xline(0)
+yline(0,'HandleVisibility','off')
+xline(0,'HandleVisibility','off')
+plot(x,x+2,'DisplayName',"3")
 
-legend(["Quadratic","Linear"])
-% legend show
+% legend(["Quadratic","Linear","","","HI"])
+legend show
 
 xlabel("x")
 ylabel("f(x)")
