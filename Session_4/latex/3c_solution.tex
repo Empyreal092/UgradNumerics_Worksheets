@@ -1,0 +1,45 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+\section{Solution to (3.c)}
+
+For $\norm{A}_\infty\leq \sqrt{n}\norm{A}_2$: Set $\mathbf{1}$ be the $n-$vector that has 1 as its entries. We have
+\begin{align*}
+\Vert A\Vert_\infty = \Vert A\cdot\mathbf{1}\Vert_\infty \leq \Vert A\cdot\mathbf{1}\Vert_2 \leq \Vert A\Vert_2\cdot\Vert\mathbf{1}\Vert_2 = \sqrt{n}\Vert A\Vert_2
+\end{align*}
+
+For $\norm{A}_2\leq \sqrt{n}\norm{A}_\infty$: Suppose $\ve{v}$ to be the $n$-vector such that $\Vert A \Vert_2 = \Vert A \mathbf{v}\Vert_2$ and $\norm{\ve v}_2 = 1$. We have:
+\begin{align*}
+\norm{A}_2 = \Vert A \ve{v}\Vert_2 \leq \sqrt{n}\Vert A \ve{v}\Vert_\infty \leq \sqrt{n}\Vert A\Vert_\infty\Vert \ve{v} \Vert_\infty \leq \sqrt{n}\Vert A\Vert_\infty\norm{\ve v}_2 = \sqrt{n}\Vert A\Vert_\infty.
+\end{align*}
+
+
+
+\end{document}
