@@ -1,0 +1,116 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{Numerical Analysis}
+\newcommand\hwnumber{4}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{October 6th, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+\section{Calculating Pivoted-LU}
+Compute by hand an LU factorization with pivoting ($PA = LU$) of the matrix:
+\begin{align*}
+A:=
+  \begin{bmatrix}
+    -2  &   0   &   6\\
+    -3  &   6   &   9\\
+    -1 &    4   &   5
+  \end{bmatrix}.
+\end{align*}
+Double check your result using MATLAB's or Python's LU-function!
+
+\section{Matrix Norms Basics}
+\subsection{}
+Compute $\|A\|_\infty$ and $\|A\|_1$ for the matrix
+\[
+A = \begin{bmatrix}
+1 & -1  &2 & -3 \\ 7 & 2 & 3 & 5 \\ 2 & -4 & 3 & 8 \\ -3 & 5 & 3 & 1
+\end{bmatrix}.
+\]
+
+% \subsection{}
+% Find $\|{A}\|_2$ for the matrix 
+% \[
+% A = \begin{bmatrix} 1 & \varepsilon \\ \varepsilon & 1 \end{bmatrix},
+% \]where $\varepsilon \in (0,1)$ (Hint: for symmetric matrices $A$, the
+% eigenvalues of $A^T A$ are simply the squares of the eigenvalues of
+% $A$).
+
+\subsection{}
+Show that for symmetric positive definite (i.e., all eigenvalues
+  are positive) matrices $A\in \mathbb R^{n\times n}$, the 2-norm
+  condition number can also be computed as the ratio between the
+  largest and the smallest eigenvalue of $A$, i.e.:
+  $\kappa_2(A)=\lambda_{\max}/\lambda_{\min}$. Hint: Think about what
+  the largest eigenvalue of $A^{-1}$ is.
+  
+\newpage
+\section{Norms Equivalency}
+Two norms in a finite-dimensional linear space $X$ (e.g.: $\mathbb{R}^n$), $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$, are called equivalent if there is a constant $c$ such that for all $x$ in $X$,
+\begin{align}
+    \norm{x}_a\leq c\norm{x}_b,\qquad \norm{x}_b\leq c\norm{x}_a.\label{eq:norm_equiv}
+\end{align}
+
+\subsection{}
+Suppose $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$ are equivalent, and we know that an algorithm produce a sequence of vectors $\{e_n\}_{n\geq 1}$, $\norm{e_n}_a\to 0$ as $n\to\infty$. What could we conclude about $\norm{e_n}_b$'s behavior for $n\to\infty$.
+
+\subsection{}
+We first show that the vector norms on $\mathbb{R}^n$, $\norm{\;\cdot\;}_{2}$ and $\norm{\;\cdot\;}_{\infty}$, are equivalent. To do this prove the inequality:
+\begin{align*}
+    \norm{x}_\infty \leq \norm{x}_2 \leq \sqrt{n}\norm{x}_\infty.
+\end{align*}
+
+\subsection{}
+The induced matrix norm on $\mathbb{R}^{n\times n}$: $\norm{\;\cdot\;}_{2}$ and $\norm{\;\cdot\;}_{\infty}$ are equivalent as well. Prove the inequality
+\begin{align*}
+    &\norm{A}_\infty \leq \sqrt{n}\norm{A}_2,\\
+    &\norm{A}_2 \leq \sqrt{n}\norm{A}_\infty.
+\end{align*}
+
+\subsection{}
+(Challenge) Prove that: in a finite-dimensional linear space, all norms are equivalent; that is, any two satisfy \eqref{eq:norm_equiv} with some $c$, depending on the pair of norms \cite[p.217]{Lax_07}.
+
+One inequality is relative simple, the other one requires some big theorems from analysis. Read about the proof in Lax's book if you are interested.
+
+
+\vfill
+\bibliographystyle{alpha}
+\bibliography{citation}
+
+\end{document}
