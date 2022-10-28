@@ -1,0 +1,117 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{Numerical Analysis}
+\newcommand\hwnumber{6}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{October 21st, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+The examples in this worksheet comes from \cite[\S 1.2]{BurdenFaires_10}.
+
+\section{Finite digit arithmetic}
+For convenience of understanding and calculation, in this worksheet, we model the round-off error as a finite digit arithmetic. We will use $k$-digit chopping for numbers. For example, if we use 3-digit chopping, and write the finite digit representation as a function $fl()$, we then have
+\begin{align*}
+    &fl(\pi) = 3.14\\
+    &fl(1239.6) = 1230. 
+\end{align*}
+We could also use $k$-digit rounding where we round the last number instead of chop.
+
+\subsection{}
+Show that for a $k$-digit chopping representation of numbers, we have
+\begin{align*}
+    \frac{|y-fl(y)|}{|y|}\leq \frac{1}{0.1}\times 10^{-k} = 10^{-k+1}.
+\end{align*}
+
+
+\section{Quadratic formula: an example of catastrophic cancellation}
+For the quadratic problem $(a\neq 0)$
+\begin{align*}
+    ax^2+bx+c = 0
+\end{align*}
+the quadratic formula gives the roots:
+\begin{align*}
+    &x_1 = \frac{-b+\sqrt{b^2-4ac}}{2a}, \qquad x_x = \frac{-b-\sqrt{b^2-4ac}}{2a}.
+\end{align*}
+Apply this formula to $x^2+62.10x+1 = 0$ whose roots are approximately
+\begin{align*}
+    &x_1 \approx -0.01610723, \qquad x_2 \approx -62.08390.
+\end{align*}
+
+\subsection{}
+Use four-digit rounding arithmetic in the calculation to determine the root. Compute the relative error for calculating $x_1$
+\begin{align*}
+    \frac{|fl(x_1)-x_1|}{|x_1|}.
+\end{align*}
+You will find the the relative error is large. Why is this the case?
+
+\subsection{}
+A similar calculation of $x_2$ using the quadratic formula produces result with a small relative error.
+
+\subsection{}
+To produce a better approximation of $x_1$, we change the formula by ``rationalizing the numerator'':
+\begin{align*}
+    x_1 = \frac{-2c}{b+\sqrt{b^2-4ac}}.
+\end{align*}
+Show that this is an equivalent formula as the quadratic formula, for exact arithmetic.
+
+\subsection{}
+Use the new formula to calculate a new $fl(x_1)$, and calculate the relative error. Compare this with the one from using the quadratic formula, why has there been much improvement?
+
+\section{Horner's rule for evaluating polynomials}
+We will evaluate $f(x) = x^3-6.1x^2+3.2x+1.5$ at $x=4.71$ using three-digit chopping arithmetic. 
+
+\subsection{}
+The most obvious way is to evaluate each term separately, and sum them up. What is the relative error? How many floating point operations are needed (count sum and multiplications separately)?
+
+\subsection{}
+An alternative approach is using the Horner's rule to write the polynomial as a nested expression:
+\begin{align*}
+    f(x) = ((x-6.1)x+3.2)x+1.5.
+\end{align*}
+Use three-digit chopping arithmetic to evaluate the function. How about the relative error now? How many floating point operations are needed?
+
+
+
+
+\vfill
+\bibliographystyle{alpha}
+\bibliography{citation}
+
+\end{document}
