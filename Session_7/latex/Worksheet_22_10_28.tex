@@ -15,9 +15,9 @@
 % -----------------------------------
 \usepackage{fancyhdr}
 \newcommand\course{Numerical Analysis}
-\newcommand\hwnumber{6}                  % <-- homework number
+\newcommand\hwnumber{7}                  % <-- homework number
 \newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
-\newcommand\NetIDb{October 21st, 2022}
+\newcommand\NetIDb{October 28th, 2022}
 \pagestyle{fancyplain}
 \headheight 35pt
 \lhead{\NetIDa\\\NetIDb}
@@ -43,69 +43,70 @@
 \input{../../command.tex}
 \begin{document}
 
-The examples in this worksheet comes from \cite[\S 1.2]{BurdenFaires_10}.
+Material taken from \cite[Lecture 6 and 10]{TrefethenBau_97}.
 
-\section{Finite digit arithmetic}
-For convenience of understanding and calculation, in this worksheet, we model the round-off error as a finite digit arithmetic. We will use $k$-digit chopping for numbers. For example, if we use 3-digit chopping, and write the finite digit representation as a function $fl()$, we then have
+\section{Projectors}
+A projector is a square matrix $P$ that satisfies
 \begin{align*}
-    &fl(\pi) = 3.14\\
-    &fl(1239.6) = 1230. 
-\end{align*}
-We could also use $k$-digit rounding where we round the last number instead of chop.
-
-\subsection{}
-Show that for a $k$-digit chopping representation of numbers, we have
-\begin{align*}
-    \frac{|y-fl(y)|}{|y|}\leq \frac{1}{0.1}\times 10^{-k} = 10^{-k+1}.
-\end{align*}
-
-
-\section{Quadratic formula: an example of catastrophic cancellation}
-For the quadratic problem $(a\neq 0)$
-\begin{align*}
-    ax^2+bx+c = 0
-\end{align*}
-the quadratic formula gives the roots:
-\begin{align*}
-    &x_1 = \frac{-b+\sqrt{b^2-4ac}}{2a}, \qquad x_x = \frac{-b-\sqrt{b^2-4ac}}{2a}.
-\end{align*}
-Apply this formula to $x^2+62.10x+1 = 0$ whose roots are approximately
-\begin{align*}
-    &x_1 \approx -0.01610723, \qquad x_2 \approx -62.08390.
+    P^2 = P.
 \end{align*}
 
 \subsection{}
-Use four-digit rounding arithmetic in the calculation to determine the root. Compute the relative error for calculating $x_1$
+Assume $P$ is a projector, show that $I-P$ is also a projector.
+
+\subsection{}
+We can show that
 \begin{align*}
-    \frac{|fl(x_1)-x_1|}{|x_1|}.
+    & \text{range}(I-P) = \text{null}(P);\\
+    & \text{null}(I-P) = \text{range}(P);\\
+    & \text{range}(P) \cap \text{null}(P) = 0.
 \end{align*}
-You will find the the relative error is large. Why is this the case?
+
+An orthogonal projector is a projector whose has the subspaces $\text{range}(P)$ and $\text{null}(P)$ orthogonal.
 
 \subsection{}
-A similar calculation of $x_2$ using the quadratic formula produces result with a small relative error.
+Show that if $P=P^\top$ symmetric, the projector $P$ is orthogonal (Hint: take one vector in $\text{range}(P)$ and one in $\text{null}(P)$, show that they must be orthogonal to each other)
+
+The reverse direction holds as well. Therefore the two definition are equivalent.
 
 \subsection{}
-To produce a better approximation of $x_1$, we change the formula by ``rationalizing the numerator'':
+A special case of orthogonal projection is projection onto a vector:
 \begin{align*}
-    x_1 = \frac{-2c}{b+\sqrt{b^2-4ac}}.
+    P_a = \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
-Show that this is an equivalent formula as the quadratic formula, for exact arithmetic.
+Show that it is indeed an orthogonal projector with range $\text{span}(\ve v)$.
 
 \subsection{}
-Use the new formula to calculate a new $fl(x_1)$, and calculate the relative error. Compare this with the one from using the quadratic formula, why has there been much improvement?
-
-\section{Horner's rule for evaluating polynomials}
-We will evaluate $f(x) = x^3-6.1x^2+3.2x+1.5$ at $x=4.71$ using three-digit chopping arithmetic. 
-
-\subsection{}
-The most obvious way is to evaluate each term separately, and sum them up. What is the relative error? How many floating point operations are needed (count sum and multiplications separately)?
-
-\subsection{}
-An alternative approach is using the Horner's rule to write the polynomial as a nested expression:
+Another orthogonal projection is
 \begin{align*}
-    f(x) = ((x-6.1)x+3.2)x+1.5.
+    P_{\perp a} = I-\frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
-Use three-digit chopping arithmetic to evaluate the function. How about the relative error now? How many floating point operations are needed?
+What is its null space? What is its range?
+
+\newpage
+\section{Geometric interpretation of Householder reflectors}
+\subsection{}
+Name $H(\ve v)$ the linear subspace orthogonal to the vector $\ve v$. A reflector across $H(\ve v)$ is 
+\begin{align*}
+    F_{\ve v} = I - 2 \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
+\end{align*}
+Compare this with $P_a$ and $P_{\perp a}$, interpret the formula geometrically.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{figs/TB_HouseholderRef}
+\end{figure}
+
+\subsection{}
+To use Householder for QR decomposition, we want $F\ve x = c\ve e_1$. We know that $c = \pm\norm{\ve x}_2$. Explain this geometrically.
+
+\subsection{}
+From this we have that
+\begin{align*}
+    \ve v = \ve x- F\ve x =  \ve x \pm \norm{\ve x}\ve e_1.
+\end{align*}
+From a geometric point of view, why is this the correct formula.
+
 
 
 
