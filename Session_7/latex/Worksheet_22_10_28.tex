@@ -64,22 +64,24 @@ We can show that
 
 An orthogonal projector is a projector whose has the subspaces $\text{range}(P)$ and $\text{null}(P)$ orthogonal.
 
+n.b.: An orthogonal projector $P$ is not an orthogonal matrix! Why?
+
 \subsection{}
-Show that if $P=P^\top$ symmetric, the projector $P$ is orthogonal (Hint: take one vector in $\text{range}(P)$ and one in $\text{null}(P)$, show that they must be orthogonal to each other)
+Show that if $P=P^\top$ symmetric, the projector $P$ is orthogonal (Hint: take one vector in $\text{range}(P)$ and one in $\text{null}(P)$, show that they must be orthogonal to each other). 
 
 The reverse direction holds as well. Therefore the two definition are equivalent.
 
 \subsection{}
 A special case of orthogonal projection is projection onto a vector:
 \begin{align*}
-    P_a = \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
+    P_v = \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
 Show that it is indeed an orthogonal projector with range $\text{span}(\ve v)$.
 
 \subsection{}
 Another orthogonal projection is
 \begin{align*}
-    P_{\perp a} = I-\frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
+    P_{\perp v} = I-\frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
 What is its null space? What is its range?
 
@@ -90,7 +92,7 @@ Name $H(\ve v)$ the linear subspace orthogonal to the vector $\ve v$. A reflecto
 \begin{align*}
     F_{\ve v} = I - 2 \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
-Compare this with $P_a$ and $P_{\perp a}$, interpret the formula geometrically.
+Compare this with $P_v$ and $P_{\perp v}$, interpret the formula geometrically.
 
 \begin{figure}[H]
     \centering
