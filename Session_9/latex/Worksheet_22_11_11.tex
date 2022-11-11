@@ -1,0 +1,131 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{8}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{November 4th, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+\section{QR decomposition via Householder}
+\subsection{}
+Construct the QR factorization of the following matrix
+  using Householder reflectors:
+\begin{align*}
+{A} = 
+\begin{bmatrix}
+1 & 0 & 1 \\
+2 & 1 & 3 \\
+0 & 2 & 4
+\end{bmatrix}.
+\end{align*}
+\subsection{}
+Use the factorization to determine $|\det(A)|$
+
+\section{Gershgorin disks and the power method}
+Consider the matrix 
+$$
+A = \begin{bmatrix}
+- 6 & 2 & 0.3 & 0 & -0.7 \\
+2 & - 4 & 0.1 & 0.05 & 0 \\
+0.3 & 0.1 & 2 & 0.1 & 0.1 \\
+0 & 0.05 & 0.1 &  4 & 0 \\
+-0.7 & 0 & 0.1  & 0  & 6
+\end{bmatrix}
+$$
+and recall the definition of the Gershgorin disks:
+\[
+D_i = \{ z \in \mathbb C ~|~ |z - a_{ii}| \le \sum_{j \ne i} |a_{ij}| \}.
+\]
+
+\subsection{}
+Argue that all eigenvalues of $A$ are real.
+
+\subsection{}
+What are the Gershgorin disks for $A$?  Use them to give a set, $D \subset \mathbb{R}$, that contains all eigenvalues of $A$.
+
+\subsection{}
+Can you conclude that the eigenvalue with the largest absolute value is simple?
+
+\subsection{}
+Argue that $A$ is invertible. Conclude that all diagonally dominant matrix is invertible.
+
+\subsection{}
+True or False? Let $A \in \mathbb{R}^{n \times n}$ and $D_i$, $i
+  = 1,2,\dots,n$, be the Gerschgorin disks of $A$. If $0 \in
+  \bigcup_{i=1}^n D_i$ then $A$ is singular.
+  
+\subsection{}
+Write down the first iteration of the power method starting from $\ve x_0 = (0,0,0,0,1)^T$.
+You don't need to normalize.
+Explain why $\ve x_0 = \ve 0$ is not a suitable starting point.
+
+\subsection{}
+The eigenvalues of $A$, after rounding, are $\{-7, -3, 2, 4, 6\}$.
+Which eigenvalue direction will the sequence of the previous question converge to?
+
+\section{Eigenvectors as stationary points of Rayleigh quotient}
+% Let $H$ be a real symmetric matrix. Denote the eigenvalues of $H$, arranged in increasing order, by $a_1,\dots,a_n$. Then we have that
+% \begin{align*}
+%     a_j = \min_{\dim S = j}\max_{x\in S,x\neq 0} \frac{x^\top Hx}{x^\top x}
+% \end{align*}
+% where $S$ is a linear subspace of $X$ \cite[p.116]{Lax_07}.
+
+For $H$ a real symmetric matrix, we define Rayleigh quotient as a function $\mathbb{R}^n\to\mathbb{R}$:
+\begin{align*}
+    R(\ve x) = \frac{\ve x^\top H\ve x}{\ve x^\top \ve x} = \frac{q(\ve x)}{p(\ve x)}.
+\end{align*}
+We will show that $\ve v$ is a stationary point (i.e.: $\nabla R(\ve v) = 0$) of the Rayleigh quotient if and only if it is an eigenvector of $H$ (cf. \cite[p.114-116]{Lax_07} and \cite[p.203-204]{TrefethenBau_97}).
+
+\subsection{}
+To characterize a point such that $\nabla R(\ve v) = 0$, we need to know the gradient of $R(\ve x)$ at $\ve v$. We could do this, but an alternative approach is to take $t\in \mathbb{R}$ and calculate
+\begin{align*}
+    \left.\frac{\de}{\de t} R(\ve v+t\ve y)\right|_{t=0}
+\end{align*}
+for all $\ve y\in\mathbb{R}^n$. In particular, we can get the gradient by picking $\ve y = \ve e_i$.
+
+\subsection{}
+Using the above calculation, shows the iff claim in the main text of the problem.
+
+
+\vfill
+\bibliographystyle{alpha}
+\bibliography{citation}
+
+\end{document}

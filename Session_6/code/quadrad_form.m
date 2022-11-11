@@ -15,14 +15,14 @@ numer = fl_round(-b+sq_calc,4);
 x1 = fl_round(numer/ta,4);
 
 x1_true = -0.01610723;
-rel_err1 = abs(x1_true-x1)/abs(x1_true);
+rel_err1 = abs(x1_true-x1)/abs(x1_true)
 
 %%
 numer = fl_round(-b-sq_calc,4);
 x2 = fl_round(numer/ta,4);
 
 x2_true = -62.08390;
-rel_err2 = abs(x2_true-x2)/abs(x2_true);
+rel_err2 = abs(x2_true-x2)/abs(x2_true)
 
 %%
 tc = fl_round(2*c,4);
@@ -30,7 +30,7 @@ tc = fl_round(2*c,4);
 demon = fl_round(b+sq_calc,4);
 x1_alt = fl_round(-tc/demon,4);
 
-rel_err1_alt = abs(x1_true-x1_alt)/abs(x1_true);
+rel_err1_alt = abs(x1_true-x1_alt)/abs(x1_true)
 
 
 
