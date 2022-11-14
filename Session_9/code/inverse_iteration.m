@@ -26,8 +26,10 @@ evec_error_save = nan(1,n);
 eval_error_save = nan(1,n);
 
 x_iter = x_0;
+[L,U] = lu(A-theta*eye(n));
 for i = 1:max_iter
-    x_iter = (A-theta*eye(n))\x_iter;
+%     x_iter = (A-theta*eye(n))\x_iter; 
+    x_iter = U\(L\x_iter); 
     x_iter = x_iter/norm(x_iter);
     evec_error_save(i) = min(norm(evec_max-x_iter),norm(-evec_max-x_iter));
 
@@ -47,6 +49,7 @@ legend(["error($v^k$)","error($\lambda^k$)"])
 ylimm = ylim; ylim([1e-18 ylimm(2)])
 xlabel("Iteration Number ($k$)")
 ylabel("Errors")
+% pplot(16,0.8)
 
 hold off
 
