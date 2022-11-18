@@ -507,7 +507,6 @@ When computing the LU
     \item Show that, the submatrix you obtain when removing the first column and row is again strictly  diagonally dominant.
 \end{enumerate}
 
-
 \subsection{}
 Let's show that an LU decomposition without pivoting exists in a different way:
   \begin{enumerate}
@@ -531,7 +530,7 @@ Let's show that an LU decomposition without pivoting exists in a different way:
 
 
 
-\section{Calculating Pivoted-LU}
+\section{Calculating pivoted-LU}
 Compute by hand an LU factorization with pivoting ($PA = LU$) of the matrix:
 \begin{align*}
 A:=
@@ -542,8 +541,10 @@ A:=
   \end{bmatrix}.
 \end{align*}
 Double-check your result using MATLAB's or Python's LU function!
-
-\section{Matrix Norms Basics}
+% -----------------------------------
+% -----------------------------------
+\chapter{Conditioning and Stability}
+\section{Matrix norms basics}
 \subsection{}
 Compute $\|A\|_\infty$ and $\|A\|_1$ for the matrix
 \[
@@ -595,7 +596,7 @@ The induced matrix norm on $\mathbb{R}^{n\times n}$: $\norm{\;\cdot\;}_{2}$ and 
 
 One inequality is relatively simple, the other one requires some big theorems from analysis. Read about the proof in Lax's book if you are interested.
 
-\section{Conditional numbers based on different norms}
+\section{Condition numbers based on different norms}
 \subsection{}
 Let $A \in \mathbb{R}^{n\times n}$ be defined by
 \begin{equation*}
@@ -626,7 +627,7 @@ Check that we have for both norms:
     \frac{\norm{\Delta\ve x}}{\norm{\ve x}} \leq \kappa(A)\frac{\norm{\Delta\ve b}}{\norm{\ve b}}.
 \end{align*}
 
-\section{Conditional Number for the Hilbert Matrix***}  
+\section{Conditional number for the Hilbert matrix***}  
 The Hilbert matrix $H\in \mathbb R^{n\times n}$ is a matrix with
   entries
   $$
@@ -654,7 +655,7 @@ Using MATLAB or Python, compute the 2-norm-based condition
   in the solutions. How much are these better than the estimates you
   got from the condition number?
   
-\section{Conditional numbers and pivoted LU}
+\section{Condition numbers and pivoted LU}
 \subsection{}
 Solve the matrix equation $A\boldsymbol x = \boldsymbol b$ with 
 \begin{align*}
@@ -695,7 +696,7 @@ PA = \begin{bmatrix} 1 & 1 \\ 10^{-4} & 1
 \end{align*}
 We see that the LU factors with pivoting are better conditioned.
 
-\section{Conditional Number for Solving Linear System}  
+\section{Condition number for solving linear system}  
 \subsection{}
 Find $\|{A}\|_2$ for the matrix 
 \[
@@ -724,7 +725,9 @@ an upper bound for the relative error $\frac{\|\tilde {\boldsymbol x}
   - {\boldsymbol x}\|_2}{\|{\boldsymbol x}\|_2}$ where $\tilde
 {\boldsymbol x} = (\tilde x_1, \tilde x_2)^T$ and ${\boldsymbol x} =
 (x_1,x_2)^T$. This upper bound will depend on $\varepsilon$.
-
+% -----------------------------------
+% -----------------------------------
+\chapter{QR Factorization and Least Squares}
 \section{Two forms of QR}
 \subsection{}
 We have two forms of QR:
@@ -940,7 +943,7 @@ for all $\ve y\in\mathbb{R}^n$. In particular, we can get the gradient by pickin
 \subsection{}
 Using the above calculation, show the iff claim in the main text of the problem.
 
-\section{Computing Eigenvalues via the Power Iteration}
+\section{Computing eigenvalues via the Power Iteration}
 Given is the following matrix:
 \[
 A=\begin{bmatrix}
@@ -1010,10 +1013,78 @@ Implement the Rayleigh Quotient Iteration.
     \item What is the order of convergence of the eigenvector estimates and the eigenvalue estimates?
     \item Could you explain this (high) order of convergence?
 \end{enumerate}
+
+\section{Singular Value Decomposition (SVD) basics}
+\subsection{}
+Like QR, SVD has the full and reduced form \cite{TrefethenBau_97}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.49\textwidth]{Session_10/latex/figs/TB_reducedSVD}
+    \includegraphics[width = 0.49\textwidth]{Session_10/latex/figs/TB_fullSVD}
+\end{figure}
+Note that the full form has $U$ which spans the whole of $\mathbb{R}^n$.
+
+\subsection{}
+We can interpret the full form of SVD as a change of basis, then a scaling, and then another change of basis (Figure from \cite{Strang_93}).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{Session_10/latex/figs/strang_SVD}
+\end{figure}
+
+\section{Some properties of SVD}
+We list (and attempt to prove) some properties of SVD:
+
+\subsection{}
+$\text{range}(A) = \text{span}(\ve u_1,\ve u_2,\dots,\ve u_r)$ and $\text{null}(A) = \text{span}(\ve v_{r+1},\dots,\ve v_n)$. 
+
+\subsection{}
+The rank of $A$ is $r$, the number of nonzero singular values.
+
+\subsection{}
+We have $\norm{A}_2 = \sigma_1$, the largest singular value. And $\norm{A}_F = \sqrt{\sigma_1^2+\sigma_2^2+\dots+\sigma_r^2}$. 
+
+You will show the second property in your homework.
+
+\section{Low-rang approximation using SVD}
+\subsection{}
+Show that $A$ is the sum of $r$ \emph{rank-one} matrices:
+\begin{align*}
+    A = \sum_{j=1}^r \sigma_j \ve u_j \ve v_j^\top.
+\end{align*}
+
+\subsection{}
+For any $\nu$ with $0\leq \nu \leq r$, define
+\begin{align*}
+    A_\nu = \sum_{j=1}^\nu \sigma_j \ve u_j \ve v_j^\top.
+\end{align*}
+Then we have
+\begin{align*}
+    \norm{A-A_\nu}_2 = \inf_{\substack{B\in\mathbb{R}^{m\times n}\\\text{rank}(B)\leq\nu}}\norm{A-B}_2 = \sigma_{\nu+1}.
+\end{align*}
+
+Note that a similar theorem is also true for the Frobenius norm.
 % -----------------------------------
 % -----------------------------------
 \chapter{Interpolations}
+\section{Polynomial interpolation and linear algebra}
+In lecture you have learned the theorem which states:
 
+For $n\geq 1$ and distinct $n+1$ data pairs $(x_0,y_0),\dots,(x_n,y_n)$ there exists a unique $p_n(x)\in P_n$, an $n$-th order polynomial such that $p_n(x_i) = y_i$ for $i = 0,\dots,n$. 
+
+We will try to prove this using linear algebra.
+
+\subsection{}
+We can write an $n$-th order polynomial as
+\begin{align*}
+    p_n(x) = a_0 + a_1x + \dots + a_nx^n.
+\end{align*}
+This gives us $n+1$ free variables to solve. Frame the problem of finding $p_n(x)$ s.t. $p_n(x_i) = y_i$ for $i = 0,\dots,n$ as a matrix problem $X\ve a = \ve y$.
+
+\subsection{}
+Show that since $x_i\neq x_j$ for all $i,j$, we have the matrix $X$ we constructed has full rank. 
+
+\subsection{}
+Think about the uniqueness and existence claim in the theorem in linear algebra language. 
 
 
 \newpage

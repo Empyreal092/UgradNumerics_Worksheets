@@ -64,7 +64,7 @@ We can interpret the full form of SVD as a change of basis, then a scaling, and 
 We list (and attempt to prove) some properties of SVD:
 
 \subsection{}
-$\text{range}(A) = \text{span}(u_1,u_2,\dots,u_r)$ and $\text{null}(A) = \text{span}(v_{r+1},\dots,v_n)$. 
+$\text{range}(A) = \text{span}(\ve u_1,\ve u_2,\dots,\ve u_r)$ and $\text{null}(A) = \text{span}(\ve v_{r+1},\dots,\ve v_n)$. 
 
 \subsection{}
 The rank of $A$ is $r$, the number of nonzero singular values.
@@ -78,13 +78,13 @@ You will show the second property in your homework.
 \subsection{}
 Show that $A$ is the sum of $r$ \emph{rank-one} matrices:
 \begin{align*}
-    A = \sum_{j=1}^r \sigma_j u_j v_j^*.
+    A = \sum_{j=1}^r \sigma_j \ve u_j \ve v_j^\top.
 \end{align*}
 
 \subsection{}
 For any $\nu$ with $0\leq \nu \leq r$, define
 \begin{align*}
-    A_\nu = \sum_{j=1}^\nu \sigma_j u_j v_j^*.
+    A_\nu = \sum_{j=1}^\nu \sigma_j \ve u_j \ve v_j^\top.
 \end{align*}
 Then we have
 \begin{align*}
