@@ -1,0 +1,123 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{9}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{November 11th, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+\section{Computing Eigenvalues via the Power Iteration}
+Given is the following matrix:
+\[
+A=\begin{bmatrix}
+-2 & 1 & 4  \\ 1 & 1 & 1 \\ 4 & 1 & -2 \end{bmatrix},
+\]
+It has eigenvalues and eigenvectors:
+\[
+\lambda_1=0,
+\, {\boldsymbol v_1}
+=\begin{bmatrix}
+0.41  \\ -0.82 \\ 0.41 \end{bmatrix},\quad
+\lambda_2=-6,
+\,{\boldsymbol v_2}
+=\begin{bmatrix}
+0.71  \\ 0.0 \\ -0.71 \end{bmatrix},\quad
+\lambda_3=3, \,{\boldsymbol v_3}
+=\begin{bmatrix}
+-0.58  \\ -0.58 \\ -0.58 \end{bmatrix}.
+\]
+
+\subsection{}\label{sec:1.a}
+Calculate the first iterate of the power method when ${\boldsymbol x_0}=(0,1,1)^T$.
+
+\subsection{}
+Which eigenvalue direction will the sequence defined in \ref{sec:1.a} converge to?
+  
+\subsection{}
+Give an initialization vector such that the power method does \emph{not} converge to the direction of the largest (in absolute value) eigenvalue.
+  
+\subsection{}\label{sec:1d}
+Write a simple program implementing the power method for the matrix $A$.
+\begin{enumerate}
+    \item Use the Rayleigh quotient to calculate estimates of the eigenvalues for each iteration.
+    \item What is the order of convergence of the eigenvector estimates and the eigenvalue estimates? What is the speed of convergence?
+    \item Could you explain the relation between the two convergence speeds? \\
+    (Hint: last week we showed that eigenvectors $\ve v$ are stationary points of the Rayleigh quotient)
+\end{enumerate}
+
+\section{The Inverse Iteration}
+Take $A$ to be the matrix above, and let $\theta\in\mathbb{R}$ and let ${\boldsymbol x_0}\in\mathbb{R}^3$.
+\subsection{}
+Define the \emph{Inverse Iteration} (also called
+  \emph{Inverse Power Method}) to calculate eigenvectors of $A$ near
+  $\theta$.
+
+\subsection{}
+If $\theta=2$, where will the sequence defined in (i)
+  converge to and why?
+
+\subsection{}
+If $\theta=-2$, where will the sequence defined in (i)
+  converge to and why?
+
+\subsection{}
+Write a simple program implementing the inverse power method. Do the same sub-tasks as the ones in \ref{sec:1d}.
+
+\section{The Rayleigh Quotient Iteration}
+It is irresistible to use the eigenvalues estimates from the Rayleigh quotient to update $\theta$ for each step in the inverse iteration. The resulting algorithm is the Rayleigh Quotient Iteration \cite{TrefethenBau_97}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.8\textwidth]{figs/TB_Rayleigh_Quo_Iter}
+\end{figure}
+
+\subsection{}
+Implement the Rayleigh Quotient Iteration. 
+\begin{enumerate}
+    \item What is the order of convergence of the eigenvector estimates and the eigenvalue estimates?
+    \item Could you explain this (high) order of convergence?
+\end{enumerate}
+
+
+
+\vfill
+\bibliographystyle{alpha}
+\bibliography{citation}
+
+\end{document}
