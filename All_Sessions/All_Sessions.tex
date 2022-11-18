@@ -3,8 +3,7 @@
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
 \usepackage{amsfonts,amsmath}
 \usepackage{graphicx,float}
-\usepackage{titlesec, titletoc}
-% \usepackage[numbered]{bookmark}
+\usepackage{titlesec}
 % -----------------------------------
 \usepackage{hyperref}
 \hypersetup{%
@@ -20,18 +19,8 @@
 % -----------------------------------
 \input{../command.tex}
 % -----------------------------------
-%\renewcommand\thechapter{Chapter\;\arabic{chapter}}
 \renewcommand\thesection{\arabic{chapter}.\arabic{section}}
 \renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
-        
-\titleformat{\chapter}[block]
-  {\normalfont\LARGE\bfseries}{Chapter \thechapter}{1em}{\LARGE}
-\titlecontents{chapter}
-   [0pt]% <left>
-   {\bfseries}% <above-code>
-   {\color{blue}\chaptername\ \thecontentslabel:\quad}% <numbered-entry-format>
-   {}% <numberless-entry-format>
-   {\titlerule*[0.8pc]{.}\contentspage}
   
 \titleformat{\subsection}[runin]
         {\normalfont\bfseries}
@@ -47,7 +36,7 @@
         \Huge
         \textbf{Recitation Materials} \\
         \vspace{0.5cm}
-        \Large
+        \LARGE
         {for NYU Undergraduate Numerical Analysis}\\
         \vspace{3cm}
         By\\
@@ -74,7 +63,7 @@
 \section{READ ME}
 This document is a compilation of the worksheets used in the recitation sessions for \href{https://math.nyu.edu/dynamic/courses/undergrad/math-ua-252/}{NYU Undergraduate Numerical Analysis} in Fall of 2022. Some of the problems are taken from worksheets by Georg Stadler and Evan Toler.
 
-The \LaTeX\ files of this documents, and some demonstration codes, can be found at \url{https://github.com/Empyreal092/NA_Worksheet}.
+The \LaTeX\ files of this document, and some demonstration codes, can be found at \url{https://github.com/Empyreal092/NA_Worksheet}.
 
 For students in my recitations: the problems marked with *** are not in the weekly version of the worksheets. They are extra problems.
 
@@ -94,7 +83,7 @@ My bag of MATLAB tools: \url{https://github.com/Empyreal092/MATLAB_Tool}.
 % -----------------------------------
 \chapter{Floating-Point Arithmetic}
 \section{Finite digit arithmetic}
-For convenience of understanding and calculation, in this worksheet, we model the round-off error as a finite digit arithmetic \cite{BurdenFaires_10}. We will use $k$-digit chopping for numbers. For example, if we use 3-digit chopping, and write the finite digit representation as a function $fl()$, we then have
+For the convenience of understanding and calculation, in this worksheet, we model the round-off error as a finite digit arithmetic \cite{BurdenFaires_10}. We will use $k$-digit chopping for numbers. For example, if we use 3-digit chopping, and write the finite digit representation as a function $fl()$, we then have
 \begin{align*}
     &fl(\pi) = 3.14\\
     &fl(1239.6) = 1230. 
@@ -127,10 +116,10 @@ Use four-digit rounding arithmetic in the calculation to determine the root. Com
 \begin{align*}
     \frac{|fl(x_1)-x_1|}{|x_1|}.
 \end{align*}
-You will find the the relative error is large. Why is this the case?
+You will find the relative error is large. Why is this the case?
 
 \subsection{}
-A similar calculation of $x_2$ using the quadratic formula produces result with a small relative error.
+A similar calculation of $x_2$ using the quadratic formula produces a result with a small relative error.
 
 \subsection{}
 To produce a better approximation of $x_1$, we change the formula by ``rationalizing the numerator'':
@@ -146,20 +135,19 @@ Use the new formula to calculate a new $fl(x_1)$, and calculate the relative err
 We will evaluate $f(x) = x^3-6.1x^2+3.2x+1.5$ at $x=4.71$ using three-digit chopping arithmetic. 
 
 \subsection{}
-The most obvious way is to evaluate each term separately, and sum them up. What is the relative error? How many floating point operations are needed (count sum and multiplications separately)?
+The most obvious way is to evaluate each term separately and sum them up. What is the relative error? How many floating point operations are needed (count sum and multiplications separately)?
 
 \subsection{}
-An alternative approach is using the Horner's rule to write the polynomial as a nested expression:
+An alternative approach is using Horner's rule to write the polynomial as a nested expression:
 \begin{align*}
     f(x) = ((x-6.1)x+3.2)x+1.5.
 \end{align*}
 Use three-digit chopping arithmetic to evaluate the function. How about the relative error now? How many floating point operations are needed?
-
-
-
+% -----------------------------------
+% -----------------------------------
 \chapter{Roots Finding}
 \section{Fixed point methods}
-We want to find roots of the nonlinear equation
+We want to find the roots of the nonlinear equation
 \begin{align*}
     f(x) := x^2-x-2 = 0
 \end{align*}
@@ -239,7 +227,7 @@ Is it possible to use $g_2(x)$ in the fixed-point iteration to find the negative
 %     \includegraphics[width=.6\textwidth]{figs/recip_by_newton_function}
 % \end{figure}
 % \subsection{}
-% Give the mathematical form of Newton's method. Simplify to a format which does not require any division.
+% Give the mathematical form of Newton's method. Simplify to a format that does not require any division.
 
 % \subsection{}
 % Set $a = 5$ and $x_0 = 0.1$. Compute the Newton iterates $x_1$ and $x_2$.
@@ -353,7 +341,8 @@ Code this modified Newton's method to solve $f(x) = x^2 = 0$. Check the converge
 % \item At what rate does $x_k \to 4$? 
 %     Justify your answer with observations from the table.
 % \end{enumerate}
-
+% -----------------------------------
+% -----------------------------------
 \chapter{Solving Linear Systems}
 \section{Solving $Ax=b$ and LU factorization}
 We will study the LU-factorization of the matrix
@@ -365,7 +354,6 @@ We will study the LU-factorization of the matrix
     -6 &  -8   &   9
   \end{bmatrix}
 \end{align*}
-
 into the product
 \begin{align*}
 A = LU =
@@ -418,7 +406,7 @@ How might you ``fix" the problem?
 
 \section{Block matrices and MATLAB matrix operations}
 \subsection{}
-Let's practice creating matrices in the computer:
+Let's practice creating matrices on the computer:
 \begin{enumerate}
     \item Create a matrix of all ones in your favorite coding language.
     \item Create a matrix where its entries are independent standard Gaussian random variables (i.e.: with density $\mcal{N}(0,1)$). 
@@ -450,7 +438,7 @@ We have the block matrix multiplication formula:
 \begin{array}{c|c} A_{11}B_{11}+A_{12}B_{21} & A_{11}B_{12}+A_{12}B_{22} \\\hline A_{21}B_{11}+A_{22}B_{21} & A_{21}B_{12}+A_{22}B_{22} \end{array} \right]
 \end{align*}
 
-You could try to prove this at home. In session we will verify this formula numerically by creating examples of $A$ and $B$.
+You could try to prove this at home. In session, we will verify this formula numerically by creating examples of $A$ and $B$.
 
 \begin{enumerate}
     \item Make $A$ and $B$ to be Gaussian random matrices.
@@ -495,7 +483,7 @@ Extra: Write down the block LDU decomposition.
 
 \section{Diagonally dominant matrix and pivoting}
 A matrix is called strictly (column) diagonal-dominant if the
- absolute value of the diagonal entry in each column is larger than
+ the absolute value of the diagonal entry in each column is larger than
  the sum of the absolute values of the other entries in that
  column; i.e., for all $i$:
  $$
@@ -553,7 +541,7 @@ A:=
     -1 &    4   &   5
   \end{bmatrix}.
 \end{align*}
-Double check your result using MATLAB's or Python's LU-function!
+Double-check your result using MATLAB's or Python's LU function!
 
 \section{Matrix Norms Basics}
 \subsection{}
@@ -587,7 +575,7 @@ Two norms in a finite-dimensional linear space $X$ (e.g.: $\mathbb{R}^n$), $\nor
 \end{align}
 
 \subsection{}
-Suppose $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$ are equivalent, and we know that an algorithm produce a sequence of vectors $\{e_n\}_{n\geq 1}$, $\norm{e_n}_a\to 0$ as $n\to\infty$. What could we conclude about $\norm{e_n}_b$'s behavior for $n\to\infty$.
+Suppose $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$ are equivalent, and we know that an algorithm produces a sequence of vectors $\{e_n\}_{n\geq 1}$, $\norm{e_n}_a\to 0$ as $n\to\infty$. What could we conclude about $\norm{e_n}_b$'s behavior for $n\to\infty$?
 
 \subsection{}
 We first show that the vector norms on $\mathbb{R}^n$, $\norm{\;\cdot\;}_{2}$ and $\norm{\;\cdot\;}_{\infty}$, are equivalent. To do this prove the inequality:
@@ -605,7 +593,7 @@ The induced matrix norm on $\mathbb{R}^{n\times n}$: $\norm{\;\cdot\;}_{2}$ and 
 \subsection{}
 (Challenge) Prove that: in a finite-dimensional linear space, all norms are equivalent; that is, any two satisfy \eqref{eq:norm_equiv} with some $c$, depending on the pair of norms \cite[p.217]{Lax_07}.
 
-One inequality is relative simple, the other one requires some big theorems from analysis. Read about the proof in Lax's book if you are interested.
+One inequality is relatively simple, the other one requires some big theorems from analysis. Read about the proof in Lax's book if you are interested.
 
 \section{Conditional numbers based on different norms}
 \subsection{}
@@ -645,7 +633,7 @@ The Hilbert matrix $H\in \mathbb R^{n\times n}$ is a matrix with
   h_{ij} = \frac{1}{i+j-1}.
   $$ 
 \subsection{}
-Using MATLAB or Python, compute the 2-norm based condition
+Using MATLAB or Python, compute the 2-norm-based condition
   numbers for $n=3,5,10,20,25$.  
   
 \subsection{}
@@ -656,13 +644,13 @@ Using MATLAB or Python, compute the 2-norm based condition
   x\|_2/\|\boldsymbol x\|_2$ from the theory we discussed in class.
 
 \subsection{}
-  Now, let's compute the actual error. Use the right hand side vector
+  Now, let's compute the actual error. Use the right-hand side vector
   with entries $b_i = \sum_{j=1}^n(j/(i+j-1))$ chosen such that the
   solution vector has entries $x_i=i$. Now, Compute the numerical
   solutions\footnote{Note that all these computations contain tiny
     errors due to the final precision of computer computations.}
   $\boldsymbol x$, then re-compute $\boldsymbol b=H\boldsymbol x$ and
-  compare the relative right hand side error and the relative error
+  compare the relative right-hand side error and the relative error
   in the solutions. How much are these better than the estimates you
   got from the condition number?
   
@@ -682,7 +670,7 @@ Solve the matrix equation $A\boldsymbol x = \boldsymbol b$ with
 \end{align*}
 What is $\kappa_\infty(A)$?
 
-Consider a small perturbation $\Delta \boldsymbol b=[10^{-3},0]^\top$ being added to the right hand side, and solve again. Repeat with $\Delta \boldsymbol b =[0,10^{-3}]^\top$. You should see that small perturbations can, but do not have to have a large effect even for badly conditioned systems.
+Consider a small perturbation $\Delta \boldsymbol b=[10^{-3},0]^\top$ being added to the right-hand side, and solve again. Repeat with $\Delta \boldsymbol b =[0,10^{-3}]^\top$. You should see that small perturbation can, but does not have to have a large effect even for badly conditioned systems.
 
 \subsection{}
 Verify the following LU decomposition of a matrix $A$ without pivoting:
@@ -717,7 +705,7 @@ eigenvalues of $A^T A$ are simply the squares of the eigenvalues of
 $A$).
 
 \subsection{}
-Continued from previous item: Suppose that you have two systems
+Continued from the previous item: Suppose that you have two systems
 \begin{align*}
 \begin{matrix}
 x_1 + \varepsilon x_2 = b_1 \\
@@ -747,7 +735,7 @@ We have two forms of QR:
 \end{figure}
 
 \subsection{}
-We can interpret the formula for the solution of the least-squared problem
+We can interpret the formula for the solution of the least-squares problem
 \begin{align*}
     \hat R \ve x = \hat Q^\top \ve b
 \end{align*}
@@ -760,7 +748,7 @@ A projector is a square matrix $P$ that satisfies
 \end{align*}
 
 \subsection{}
-Assume $P$ is a projector, show that $I-P$ is also a projector.
+Assume $P$ is a projector, and show that $I-P$ is also a projector.
 
 \subsection{}
 We can show that
@@ -777,10 +765,10 @@ n.b.: An orthogonal projector $P$ is not an orthogonal matrix! Why?
 \subsection{}
 Show that if $P=P^\top$ symmetric, the projector $P$ is orthogonal (Hint: take one vector in $\text{range}(P)$ and one in $\text{null}(P)$, show that they must be orthogonal to each other). 
 
-The reverse direction holds as well. Therefore the two definition are equivalent.
+The reverse direction holds as well. Therefore the two definitions are equivalent.
 
 \subsection{}
-A special case of orthogonal projection is projection onto a vector:
+A special case of orthogonal projection is the projection onto a vector:
 \begin{align*}
     P_v = \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
@@ -799,7 +787,7 @@ Name $H(\ve v)$ the linear subspace orthogonal to the vector $\ve v$. A reflecto
 \begin{align*}
     F_{\ve v} = I - 2 \frac{\ve v \ve v^\top}{\ve v^\top \ve v}.
 \end{align*}
-Compare this with $P_v$ and $P_{\perp v}$, interpret the formula geometrically.
+Compare this with $P_v$ and $P_{\perp v}$, and interpret the formula geometrically.
 
 \begin{figure}[H]
     \centering
@@ -810,11 +798,11 @@ Compare this with $P_v$ and $P_{\perp v}$, interpret the formula geometrically.
 To use Householder for QR decomposition, we want $F\ve x = c\ve e_1$. We know that $c = \pm\norm{\ve x}_2$. Explain this geometrically.
 
 \subsection{}
-From this we have that
+From this, we have that
 \begin{align*}
     \ve v = \ve x- F\ve x =  \ve x \pm \norm{\ve x}\ve e_1.
 \end{align*}
-From a geometric point of view, why is this the correct formula.
+From a geometric point of view, why is this the correct formula?
 
 \section{QR decomposition via Householder}
 \subsection{}
@@ -880,11 +868,12 @@ this is also called \emph{regression}).
   $$
   \|A\boldsymbol x  - \boldsymbol  b\|_2^2 \ge \|\boldsymbol b_2\|_2^2,
   $$ where $\boldsymbol b_2 = \hat{\hat Q}^\top\boldsymbol b$. We also
-  found that this inequality is an equality if $\boldsymbol x$ solves
+  found that this inequality is equality if $\boldsymbol x$ solves
   the least squares problem. Thus, the norm or $\boldsymbol b_2$ is a
   measure of how well the model fits the data. Use this to decide
   which of the two models above describes the data better.
-
+% -----------------------------------
+% -----------------------------------
 \chapter{Eigen-Problems}
 \section{Gershgorin disks and the power method}
 Consider the matrix 
@@ -949,7 +938,7 @@ To characterize a point such that $\nabla R(\ve v) = 0$, we need to know the gra
 for all $\ve y\in\mathbb{R}^n$. In particular, we can get the gradient by picking $\ve y = \ve e_i$.
 
 \subsection{}
-Using the above calculation, shows the iff claim in the main text of the problem.
+Using the above calculation, show the iff claim in the main text of the problem.
 
 \section{Computing Eigenvalues via the Power Iteration}
 Given is the following matrix:
@@ -986,7 +975,7 @@ Write a simple program implementing the power method for the matrix $A$.
 \begin{enumerate}
     \item Use the Rayleigh quotient to calculate estimates of the eigenvalues for each iteration.
     \item What is the order of convergence of the eigenvector estimates and the eigenvalue estimates? What is the speed of convergence?
-    \item Could you explain the relation between the two convergence speeds? \\
+    \item Could you explain the relationship between the two convergence speeds? \\
     (Hint: last week we showed that eigenvectors $\ve v$ are stationary points of the Rayleigh quotient)
 \end{enumerate}
 
@@ -1021,7 +1010,9 @@ Implement the Rayleigh Quotient Iteration.
     \item What is the order of convergence of the eigenvector estimates and the eigenvalue estimates?
     \item Could you explain this (high) order of convergence?
 \end{enumerate}
-
+% -----------------------------------
+% -----------------------------------
+\chapter{Interpolations}
 
 
 
