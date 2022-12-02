@@ -15,9 +15,9 @@
 % -----------------------------------
 \usepackage{fancyhdr}
 \newcommand\course{MATH-UA.0252\\Numerical Analysis}
-\newcommand\hwnumber{10}                  % <-- homework number
+\newcommand\hwnumber{11}                  % <-- homework number
 \newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
-\newcommand\NetIDb{November 18th, 2022}
+\newcommand\NetIDb{December 2nd, 2022}
 \pagestyle{fancyplain}
 \headheight 35pt
 \lhead{\NetIDa\\\NetIDb}
@@ -43,79 +43,96 @@
 \input{../../command.tex}
 \begin{document}
 
-\section{Singular Value Decomposition (SVD) basics}
+\section{Polynomial interpolation basics}
+True or False?
+\begin{itemize}
+\item For the nodes $x_0=0, x_1=1, x_2= 2$, the
+  Lagrange interpolation polynomial $L_0(x)$ is $-x^2 + 1$.
+\item We compute the Hermite interpolant with 3 distinct nodes of
+  a function $f$ that is a polynomial of degree $4$. Then this
+  Hermite interpolant is identical to $f$. (In short: Hermite
+  interpolation with 3 nodes is exact for polynomials of degree 4.)
+\item Hermite interpolation with 4 distinct nodes is exact for
+  polynomials of degree 6.
+\end{itemize}
+  
+\section{Hermite interpolation polynomial example}
+Recall that the Hermite interpolation of a function $f$ at the points $x_0,x_1,x_2$ has the form 
+$$p(x) = \sum_{j=0}^2H_j(x)f(x_j)
++ \sum_{j=0}^2K_j(x)f'(x_j).$$ 
+  
 \subsection{}
-Like QR, SVD has the full and reduced form \cite{TrefethenBau_97}:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width = 0.49\textwidth]{figs/TB_reducedSVD}
-    \includegraphics[width = 0.49\textwidth]{figs/TB_fullSVD}
-\end{figure}
-Note that the full form has $U$ which spans the whole of $\mathbb{R}^n$.
-
+Show that the polynomial
+$$ -\frac{1}{\pi}x^2 + x$$ 
+is the Hermite interpolation polynomial of $f(x):=\sin(x)$ based on the nodes $x_0=0$, $x_1=\pi$.
+  
 \subsection{}
-We can interpret the full form of SVD as a change of basis, then a scaling, and then another change of basis (Figure from \cite{Strang_93}).
-\begin{figure}[H]
-    \centering
-    \includegraphics[width = 0.7\textwidth]{figs/strang_SVD}
-\end{figure}
+Show that the polynomial $K_2(x)$ in
+this representation for $x_0=0,x_1=1,x_2=2$ is given by
+$$
+\frac{1}{4}x^5 - x^4 + \frac{5}{4}x^3 - \frac{1}{2}x^2.
+$$
 
-\section{Some properties of SVD}
-We list (and attempt to prove) some properties of SVD:
-
+\newpage
+\section{Deriving a new quadrature rule}
+Given $f:[0,1]\rightarrow \mathbb{R}$, you want to derive a new
+  quadrature rule that does uses not only function values, but also
+  gradient values:
+\begin{align}
+    \int_0^1 f(x)\,\de x \approx \alpha_0 f(0) + \alpha_1 f'(0) + \alpha_2 f(1). \label{eq:11_3a}
+\end{align}
+  
 \subsection{}
-$\text{range}(A) = \text{span}(\ve u_1,\ve u_2,\dots,\ve u_r)$ and $\text{null}(A) = \text{span}(\ve v_{r+1},\dots,\ve v_n)$. 
+First, find polynomials $J_0, J_1, J_2 \in \mathcal{P}_2$, with the
+  following properties:
+  \begin{align*}
+    & J_0(0)=1,\quad J_0'(0)=0,\quad J_0(1)=0\\
+    & J_1(0)=0,\quad J_1'(0)=1,\quad J_1(1)=0\\
+    & J_2(0)=0,\quad J_2'(0)=0,\quad J_2(1)=1.
+  \end{align*}
+  ({\em Hint:} For each $J_i$, make an ansatz for a quadratic polynomial using the monomial basis.)
 
-\subsection{}
-The rank of $A$ is $r$, the number of nonzero singular values.
-
-\subsection{}
-We have $\norm{A}_2 = \sigma_1$, the largest singular value. And $\norm{A}_F = \sqrt{\sigma_1^2+\sigma_2^2+\dots+\sigma_r^2}$. 
-
-You will show the second property in your homework.
-
-\section{Low-rang approximation using SVD}
-\subsection{}
-Show that $A$ is the sum of $r$ \emph{rank-one} matrices:
-\begin{align*}
-    A = \sum_{j=1}^r \sigma_j \ve u_j \ve v_j^\top.
-\end{align*}
-
-\subsection{}
-For any $\nu$ with $0\leq \nu \leq r$, define
-\begin{align*}
-    A_\nu = \sum_{j=1}^\nu \sigma_j \ve u_j \ve v_j^\top.
-\end{align*}
-Then we have
-\begin{align*}
-    \norm{A-A_\nu}_2 = \inf_{\substack{B\in\mathbb{R}^{m\times n}\\\text{rank}(B)\leq\nu}}\norm{A-B}_2 = \sigma_{\nu+1}.
-\end{align*}
-
-Note that a similar theorem is also true for the Frobenius norm.
-
-\section{Polynomial interpolation and linear algebra}
-In lecture you have learned the theorem which states:
-
-For $n\geq 1$ and distinct $n+1$ data pairs $(x_0,y_0),\dots,(x_n,y_n)$ there exists a unique $p_n(x)\in P_n$, an $n$-th order polynomial such that $p_n(x_i) = y_i$ for $i = 0,\dots,n$. 
-
-We will try to prove this using linear algebra.
-
-\subsection{}
-We can write an $n$-th order polynomial as
-\begin{align*}
-    p_n(x) = a_0 + a_1x + \dots + a_nx^n.
-\end{align*}
-This gives us $n+1$ free variables to solve. Frame the problem of finding $p_n(x)$ s.t. $p_n(x_i) = y_i$ for $i = 0,\dots,n$ as a matrix problem $X\ve a = \ve y$.
+Given $f$, you can now define a polynomial approximation $p\in \mathcal{P}_2$ via 
+\begin{align}
+    p(x)=f(0)J_0(x)+f'(0)J_1(x)+f(1)J_2(x). \label{eq:11_3b}
+\end{align}
+The polynomial $p$ is an approximation to $f$ in the sense that
+$p(0)=f(0)$, $p'(0)=f'(0)$ and $p(1)=f(1)$. 
 
 \subsection{}
-Show that since $x_i\neq x_j$ for all $i,j$, we have the matrix $X$ we constructed has full rank. 
+Use the polynomial
+  $p$ derived in \eqref{eq:11_3b} and the same method used to derive the Newton-Cotes
+  quadrature rules, to find the coefficients $\alpha_0$, $\alpha_1$ and
+  $\alpha_2$ in \eqref{eq:11_3a}.
+  
+\subsection{}
+Use your new quadrature rule to approximate
+  $\dsp{\int_0^1\exp(2x)\sin^2(x)\,\de x}$, and also compare with
+  Simpson's rule. The exact value of this integral is 1.2668\dots.
+
+
+\section{Trapezoidal rule for smooth periodic functions}
+
+We investigate how the (composite) trapezoidal rule performs for smooth, periodic functions. Consider integrating the smooth, periodic function $f(x) = e^{\sin x}$ over a single period. The exact value of the integral is
+\[
+I(f) = \int_0^{2\pi} e^{\sin x} \, \de x = 7.95492652101284527\dots.
+\]
 
 \subsection{}
-Think about the uniqueness and existence claim in the theorem in linear algebra language. 
+Write down the composite trapezoidal rule $T_N(f)$ on equispaced nodes $0=x_0 \le  \dots \le x_N = 2\pi$ for estimating the value of this integral. 
+
+\subsection{}
+Simplify your expression for $T_N(f)$ using the periodicity of $f$.
+
+\subsection{}
+Show that $T_N(f)$ is equivalent to both a left-endpoint Riemann sum and a right-endpoint Riemann sum approximation to $I(f)$.
+
+\subsection{}
+Compute $T_N(f)$ for various progressively larger $N$. Plot the quadrature errors against $N$ on (i) a log-log plot, and (ii) a \texttt{semilogy} plot. What is the order of accuracy of the trapezoidal rule for smooth, periodic functions?
 
 
-\vfill
-\bibliographystyle{alpha}
-\bibliography{citation}
+% \vfill
+% \bibliographystyle{alpha}
+% \bibliography{citation}
 
 \end{document}
