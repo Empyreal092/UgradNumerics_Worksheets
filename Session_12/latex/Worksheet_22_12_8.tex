@@ -1,0 +1,146 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{11}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{December 2nd, 2022}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document}
+
+\section{Polynomial interpolation basics}
+True or False?
+\begin{itemize}
+\item For the nodes $x_0=0, x_1=1, x_2= 2$, the
+  Lagrange interpolation polynomial $L_0(x)$ is $-x^2 + 1$.
+\item We compute the Hermite interpolant with 3 distinct nodes of
+  a function $f$ that is a polynomial of degree $4$. Then this
+  Hermite interpolant is identical to $f$. (In short: Hermite
+  interpolation with 3 nodes is exact for polynomials of degree 4.)
+\item Hermite interpolation with 4 distinct nodes is exact for
+  polynomials of degree 6.
+\end{itemize}
+
+\section{Lagrange interpolation polynomial example}
+Let $x_0,\ldots, x_n$ be distinct interpolation nodes, and let
+  $$
+  p_n(x) = \sum^n_{k=0}L_{k}(x)(x_k)^j,
+  $$
+  where $j$ is an integer and $n \geq j>0$.
+  What are the values of $p_n(0)$ and $p_n(1)$?
+
+\section{Hermite interpolation polynomial example}
+Recall that the Hermite interpolation of a function $f$ at the points $x_0,x_1,x_2$ has the form 
+$$p(x) = \sum_{j=0}^2H_j(x)f(x_j)
++ \sum_{j=0}^2K_j(x)f'(x_j).$$ 
+  
+\subsection{}
+Show that the polynomial
+$$ -\frac{1}{\pi}x^2 + x$$ 
+is the Hermite interpolation polynomial of $f(x):=\sin(x)$ based on the nodes $x_0=0$, $x_1=\pi$.
+  
+\subsection{}
+Show that the polynomial $K_2(x)$ in
+this representation for $x_0=0,x_1=1,x_2=2$ is given by
+$$
+\frac{1}{4}x^5 - x^4 + \frac{5}{4}x^3 - \frac{1}{2}x^2.
+$$
+
+\newpage
+\section{Deriving a new quadrature rule}
+Given $f:[0,1]\rightarrow \mathbb{R}$, you want to derive a new
+  quadrature rule that does uses not only function values, but also
+  gradient values:
+\begin{align}
+    \int_0^1 f(x)\,\de x \approx \alpha_0 f(0) + \alpha_1 f'(0) + \alpha_2 f(1). \label{eq:11_3a}
+\end{align}
+  
+\subsection{}
+First, find polynomials $J_0, J_1, J_2 \in \mathcal{P}_2$, with the
+  following properties:
+  \begin{align*}
+    & J_0(0)=1,\quad J_0'(0)=0,\quad J_0(1)=0\\
+    & J_1(0)=0,\quad J_1'(0)=1,\quad J_1(1)=0\\
+    & J_2(0)=0,\quad J_2'(0)=0,\quad J_2(1)=1.
+  \end{align*}
+  ({\em Hint:} For each $J_i$, make an ansatz for a quadratic polynomial using the monomial basis.)
+
+Given $f$, you can now define a polynomial approximation $p\in \mathcal{P}_2$ via 
+\begin{align}
+    p(x)=f(0)J_0(x)+f'(0)J_1(x)+f(1)J_2(x). \label{eq:11_3b}
+\end{align}
+The polynomial $p$ is an approximation to $f$ in the sense that
+$p(0)=f(0)$, $p'(0)=f'(0)$ and $p(1)=f(1)$. 
+
+\subsection{}
+Use the polynomial
+  $p$ derived in \eqref{eq:11_3b} and the same method used to derive the Newton-Cotes
+  quadrature rules, to find the coefficients $\alpha_0$, $\alpha_1$ and
+  $\alpha_2$ in \eqref{eq:11_3a}.
+  
+\subsection{}
+Use your new quadrature rule to approximate
+  $\dsp{\int_0^1\exp(2x)\sin^2(x)\,\de x}$, and also compare with
+  Simpson's rule. The exact value of this integral is 1.2668\dots.
+
+
+\section{Trapezoidal rule for smooth periodic functions}
+
+We investigate how the (composite) trapezoidal rule performs for smooth, periodic functions. Consider integrating the smooth, periodic function $f(x) = e^{\sin x}$ over a single period. The exact value of the integral is
+\[
+I(f) = \int_0^{2\pi} e^{\sin x} \, \de x = 7.95492652101284527\dots.
+\]
+
+\subsection{}
+Write down the composite trapezoidal rule $T_N(f)$ on equispaced nodes $0=x_0 \le  \dots \le x_N = 2\pi$ for estimating the value of this integral. 
+
+\subsection{}
+Simplify your expression for $T_N(f)$ using the periodicity of $f$.
+
+\subsection{}
+Show that $T_N(f)$ is equivalent to both a left-endpoint Riemann sum and a right-endpoint Riemann sum approximation to $I(f)$.
+
+\subsection{}
+Compute $T_N(f)$ for various progressively larger $N$. Plot the quadrature errors against $N$ on (i) a log-log plot, and (ii) a \texttt{semilogy} plot. What is the order of accuracy of the trapezoidal rule for smooth, periodic functions?
+
+
+% \vfill
+% \bibliographystyle{alpha}
+% \bibliography{citation}
+
+\end{document}
