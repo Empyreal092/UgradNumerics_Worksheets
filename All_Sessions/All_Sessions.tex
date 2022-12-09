@@ -47,7 +47,7 @@
         {Courant Institute of Mathematical Sciences - New York University}\\
         \vspace{2cm}
         \Large
-        \textbf{\today}
+        \textbf{Fall, 2022}
         
     \end{center}
 \end{titlepage}
@@ -67,7 +67,7 @@ The \LaTeX\ files of this document, and some demonstration codes, can be found a
 
 For students in my recitations: the problems marked with *** are not in the weekly version of the worksheets. They are extra problems.
 
-\section{Some more tips about plotting}
+\section{Some tips about plotting}
 \subsection{}
 Size your figure so that they fit neatly onto a page without having to scale them in \LaTeX. 
 
@@ -1086,17 +1086,28 @@ Show that since $x_i\neq x_j$ for all $i,j$, we have the matrix $X$ we construct
 \subsection{}
 Think about the uniqueness and existence claim in the theorem in linear algebra language. 
 
-\section{Polynomial interpolation basics}
-True or False?
+\section{Interpolation and quadrature basics***}
 \begin{itemize}
-\item For the nodes $x_0=0, x_1=1, x_2= 2$, the
+\item True or False? For the nodes $x_0=0, x_1=1, x_2= 2$, the
   Lagrange interpolation polynomial $L_0(x)$ is $-x^2 + 1$.
-\item We compute the Hermite interpolant with 3 distinct nodes of
+\item True or False? We compute the Hermite interpolant with 3 distinct nodes of
   a function $f$ that is a polynomial of degree $4$. Then this
   Hermite interpolant is identical to $f$. (In short: Hermite
   interpolation with 3 nodes is exact for polynomials of degree 4.)
-\item Hermite interpolation with 4 distinct nodes is exact for
+\item True or False? Hermite interpolation with 4 distinct nodes is exact for
   polynomials of degree 6.
+\item True or False? Gauss quadrature with 3 integration nodes
+(and corresponding weights) is exact for polynomials of degree
+7.
+\item A Gauss quadrature rule with how many points is required to
+integrated polynomials of degree 10 exactly?
+\item  What is the result obtained with Simpson's rule for
+integrating $f(x) = x^2$ over the interval $[0,1]$?
+\item True or false: Let $p_n$ be the Lagrange interpolant to a
+function $f$ with $n+1$ interpolation points, and $e_n(x) =
+|p_n(x) - f(x)|$.  The interpolation error $\|e_n\|_\infty$ {\em
+always} gets arbitrarily small for large $n$, i.e.,
+$\|e_n\|_\infty \rightarrow 0$ as $n \rightarrow \infty$.
 \end{itemize}
 
 \section{Lagrange interpolation polynomial example}
@@ -1122,6 +1133,19 @@ this representation for $x_0=0,x_1=1,x_2=2$ is given by
 $$
 \frac{1}{4}x^5 - x^4 + \frac{5}{4}x^3 - \frac{1}{2}x^2.
 $$
+
+\section{Error bound for interpolation***}
+This requires MATLAB or Python: we interpolate the function $f:[0,1]\to\mathbb R$ defined by
+  $f(x) = \exp(3x)$ using the nodes $x_i=i/2$, $i=0,1,2$ by a
+  quadratic polynomial $p_2\in \boldsymbol P_2$.
+ Compare the exact interpolation error $E_f(x):=f(x)-p_2(x)$ at
+ $x=3/4$ with the estimate
+  \begin{equation*}
+  |E_f(x)|\le \frac{M_{n+1}}{(n+1)!}|\pi_{n+1}(x)|,
+  \end{equation*}
+  where $M_{n+1} = \max_{z\in [0,1]}|f^{(n+1)}(z)|$, $f^{(n+1)}$ is
+  the $(n+1)$st derivative of $f$, and
+  $\pi_{n+1}(x)=(x-x_0)(x-x_1)(x-x_2)$.
 
 \section{Deriving a new quadrature rule}
 Given $f:[0,1]\rightarrow \mathbb{R}$, you want to derive a new
@@ -1181,7 +1205,7 @@ Compute $T_N(f)$ for various progressively larger $N$. Plot the quadrature error
 
 \section{Convergence order of quadrature}
 \subsection{}
-We would like to integrate a function on $[0,1]$ using the composite trapezoid rule with sub-interval size $h$. We name the result $T_h$. How does the error ($e_h = |T_n-I|$) scale with $h$?
+We would like to integrate a function on $[0,1]$ using the composite trapezoid rule with sub-interval size $h$. We name the result $T_h$. How does the error ($e_h = |T_h-I|$) scale with $h$?
 
 \subsection{}
 In real application, we do not know the true value of the integral. To verify the order of convergence of our code, we can calculate this quantity:
@@ -1212,7 +1236,7 @@ Now let's consider a symmetric positive
   semi-definite matrix. Does the above definition still define an
   inner product and why/why not?
   
-\section{Orthogonal Polynomial}
+\section{Orthogonal polynomial and Gauss quadrature}
 We assume
   an inner product on $[-1,1]$ with weight $\omega(x):=1-x^2$, i.e.,
   $$
@@ -1233,6 +1257,25 @@ Are the $\varphi_j$'s orthonormal under this inner product?
 \subsection{}
 Find the polynomial $p \in \boldsymbol P_2$ for which
     $\displaystyle \int_{-1}^1 (1-x^2)(p(x) - x^3)^2 \, \de x$ is minimal.
+
+\subsection{***}
+Use this family of orthogonal polynomials to compute the
+    quadrature nodes of a 2-point Gauss quadrature rule.
+    Compute the corresponding quadrature weights by using that
+    constant and linear functions must be integrated exactly by this
+    rule.
+    
+\subsection{***}
+Up to what polynomial order is this quadrature rule exact for
+    integrals over $[-1,1]$ weighted by $\omega$?
+
+\section{More Gauss quadrature***}
+Let $\omega:[-1,1]\to \mathbb
+  R_{>0}$ be a weight function for the inner product $\langle
+  f,g\rangle:=\int_{-1}^1\omega(x)f(x)g(x)\,dx$. Assume that $\omega$
+  is continuous and strictly monotonically increasing. We want to
+  compute a Gauss quadrature formula with a single node $x_0$. Show
+  that $x_0>0$.
 
 
 \newpage
