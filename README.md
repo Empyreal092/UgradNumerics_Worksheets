@@ -4,4 +4,4 @@ Contains the worksheets (PDF and tex file) and code for NYU [undergraduate numer
 
 Some of the problems are taken from worksheets by Georg Stadler and Evan Toler.
 
-A compilation of all the worksheet is at [NA_Worksheet_AllSessions.pdf](https://github.com/Empyreal092/NA_Worksheet/blob/main/All_Sessions/NA_Worksheet_AllSessions.pdf)
+A compilation of all the worksheets is at [NA_Worksheet_AllSessions.pdf](https://github.com/Empyreal092/NA_Worksheet/blob/main/All_Sessions/NA_Worksheet_AllSessions.pdf)
