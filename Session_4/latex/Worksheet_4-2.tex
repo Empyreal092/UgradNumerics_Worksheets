@@ -1,0 +1,138 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage[style=authoryear-icomp,backend=biber]{biblatex}
+\addbibresource{citation.bib}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{4-2}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{October 6th, 2023}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document} 
+
+\section{Norms Equivalency}
+Two norms in a finite-dimensional linear space $X$ (e.g.: $\mathbb{R}^n$), $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$, are called equivalent if there is a constant $c$ such that for all $x$ in $X$,
+\begin{align}
+    \norm{\ve x}_a\leq c\norm{\ve x}_b,\qquad \norm{\ve x}_b\leq c\norm{\ve x}_a.\label{eq:norm_equiv}
+\end{align}
+
+\subsection{}
+Suppose $\norm{\;\cdot\;}_a$ and $\norm{\;\cdot\;}_b$ are equivalent, and we know that an algorithm produces a sequence of vectors $\{\ve e_n\}_{n\geq 1}$, $\norm{\ve e_n}_a\to 0$ as $n\to\infty$. What could we conclude about $\norm{\ve e_n}_b$'s behavior for $n\to\infty$?
+
+\subsection{}
+We first show that the vector norms on $\mathbb{R}^n$, $\norm{\;\cdot\;}_{2}$ and $\norm{\;\cdot\;}_{\infty}$, are equivalent. To do this prove the inequality:
+\begin{align*}
+    \norm{\ve x}_\infty \leq \norm{\ve x}_2 \leq \sqrt{n}\norm{\ve x}_\infty.
+\end{align*}
+
+\subsection{}
+The induced matrix norm on $\mathbb{R}^{n\times n}$: $\norm{\;\cdot\;}_{2}$ and $\norm{\;\cdot\;}_{\infty}$ are equivalent as well. Prove the inequality
+\begin{align*}
+    &\norm{\ve A}_\infty \leq \sqrt{n}\norm{\ve A}_2,\\
+    &\norm{\ve A}_2 \leq \sqrt{n}\norm{\ve A}_\infty.
+\end{align*}
+
+\subsection{}
+(Challenge) Prove that: in a finite-dimensional linear space, all norms are equivalent; that is, any two satisfy \eqref{eq:norm_equiv} with some $c$, depending on the pair of norms \parencite[p.217]{Lax_07}.
+
+One inequality is relatively simple, the other one requires some big theorems from analysis. Read about the proof in Lax's book if you are interested.
+
+\section{Condition numbers based on different norms}
+\subsection{}
+Let $A \in \mathbb{R}^{n\times n}$ be defined by
+\begin{equation*}
+    A = %
+    \begin{bmatrix}
+      1      & 0      & 0      & 0      &  0      \\ 
+      1      & 1      & 0      & 0      &  0      \\
+      1      & 0      & 1      & 0      &  0      \\
+      \vdots & \vdots & \vdots & \ddots &  \vdots \\
+      1      & 0      & 0      & 0      &  1
+    \end{bmatrix}.
+\end{equation*}
+Calculate $\kappa_1(A)$ and $\kappa_\infty(A)$. We see that a matrix can be well or ill-conditioned depending on the choice of norms.
+
+\subsection{}
+Indeed, we solve $A\ve x = \ve b$ and $A(\ve x+\Delta \ve x) = (\ve b+\Delta \ve b)$ where
+\begin{align*}
+    \ve b = \begin{bmatrix}
+    1\\1\\\vdots\\1
+    \end{bmatrix},\qquad \ve x = \begin{bmatrix}
+    1\\0\\\vdots\\0
+    \end{bmatrix},\qdt{and} \Delta\ve b = \begin{bmatrix}
+    \epsilon\\0\\\vdots\\0
+    \end{bmatrix}
+\end{align*}
+Check that we have for both norms:
+\begin{align*}
+    \frac{\norm{\Delta\ve x}}{\norm{\ve x}} \leq \kappa(A)\frac{\norm{\Delta\ve b}}{\norm{\ve b}}.
+\end{align*}
+
+\section{Conditional number for the Hilbert matrix}  
+The Hilbert matrix $H\in \mathbb R^{n\times n}$ is a matrix with
+  entries
+  $$
+  h_{ij} = \frac{1}{i+j-1}.
+  $$ 
+\subsection{}
+Using MATLAB or Python, compute the 2-norm-based condition
+  numbers for $n=3,5,10,20,25$.  
+  
+\subsection{}
+  Let's consider a relative right hand
+  side perturbation $\delta\boldsymbol b$ of a linear system with
+  $\|\delta\boldsymbol b\|_2/\|\boldsymbol b\|_2\approx
+  10^{-15}$. Write down the corresponding bounds $\|\delta\boldsymbol
+  x\|_2/\|\boldsymbol x\|_2$ from the theory we discussed in class.
+
+\subsection{}
+  Now, let's compute the actual error. Use the right-hand side vector
+  with entries $b_i = \sum_{j=1}^n(j/(i+j-1))$ chosen such that the
+  solution vector has entries $x_i=i$. Now, Compute the numerical
+  solutions\footnote{Note that all these computations contain tiny
+    errors due to the final precision of computer computations.}
+  $\boldsymbol x$, then re-compute $\boldsymbol b=H\boldsymbol x$ and
+  compare the relative right-hand side error and the relative error
+  in the solutions. How much are these better than the estimates you
+  got from the condition number? 
+    
+    
+\printbibliography
+
+\end{document}
