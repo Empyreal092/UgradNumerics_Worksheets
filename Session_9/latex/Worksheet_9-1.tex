@@ -1,0 +1,83 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage[style=authoryear-icomp,backend=biber]{biblatex}
+\addbibresource{citation.bib}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{9-1}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{November 10th, 2023}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document} 
+
+\section{Gershgorin disks}
+Consider the matrix 
+$$
+A = \begin{bmatrix}
+- 6 & 2 & 0.3 & 0 & -0.7 \\
+2 & - 4 & 0.1 & 0.05 & 0 \\
+0.3 & 0.1 & 2 & 0.1 & 0.1 \\
+0 & 0.05 & 0.1 &  4 & 0 \\
+-0.7 & 0 & 0.1  & 0  & 6
+\end{bmatrix}
+$$
+and recall the definition of the Gershgorin disks:
+\[
+D_i = \{ z \in \mathbb C ~|~ |z - a_{ii}| \le \sum_{j \ne i} |a_{ij}| \}.
+\]
+
+\subsection{}
+Argue that all eigenvalues of $A$ are real.
+
+\subsection{}
+What are the Gershgorin disks for $A$?  Use them to give a set, $D \subset \mathbb{R}$, that contains all eigenvalues of $A$.
+
+\subsection{}
+Can you conclude that the eigenvalue with the largest absolute value is simple?
+
+\subsection{}
+Argue that $A$ is invertible. Conclude that all diagonally dominant matrix is invertible.
+
+\section{A lecture on simultaneous iteration the reason why QG algorithm works}
+See \cite[Lecture 28]{TrefethenBau_97}.
+
+\vfill
+\printbibliography
+
+\end{document}
