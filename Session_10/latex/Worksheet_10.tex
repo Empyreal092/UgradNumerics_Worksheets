@@ -1,0 +1,126 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage[style=authoryear-icomp,backend=biber]{biblatex}
+\addbibresource{citation.bib}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{10}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{November 17th, 2023}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document} 
+
+\section{Polynomial interpolation and linear algebra}
+In lecture you have learned the theorem which states:
+
+For $n\geq 1$ and distinct $n+1$ data pairs $(x_0,y_0),\dots,(x_n,y_n)$ there exists a unique $p_n(x)\in P_n$, an $n$-th order polynomial such that $p_n(x_i) = y_i$ for $i = 0,\dots,n$. 
+
+We will try to prove this using linear algebra.
+
+\subsection{}
+We can write an $n$-th order polynomial as
+\begin{align*}
+    p_n(x) = a_0 + a_1x + \dots + a_nx^n.
+\end{align*}
+This gives us $n+1$ free variables to solve. Frame the problem of finding $p_n(x)$ s.t. $p_n(x_i) = y_i$ for $i = 0,\dots,n$ as a matrix problem $X\ve a = \ve y$.
+
+\subsection{}
+Show that since $x_i\neq x_j$ for all $i,j$, we have the matrix $X$ we constructed has full rank. 
+
+\subsection{}
+Think about the uniqueness and existence claim in the theorem in linear algebra language. 
+
+\section{Interpolation basics}
+\begin{itemize}
+\item True or False? For the nodes $x_0=0, x_1=1, x_2= 2$, the
+  Lagrange interpolation polynomial $L_0(x)$ is $-x^2 + 1$.
+\item True or False? We compute the Hermite interpolant with 3 distinct nodes of
+  a function $f$ that is a polynomial of degree $4$. Then this
+  Hermite interpolant is identical to $f$. (In short: Hermite
+  interpolation with 3 nodes is exact for polynomials of degree 4.)
+\item True or False? Hermite interpolation with 4 distinct nodes is exact for
+  polynomials of degree 6.
+\item True or false: Let $p_n$ be the Lagrange interpolant to a
+function $f$ with $n+1$ interpolation points, and $e_n(x) =
+|p_n(x) - f(x)|$.  The interpolation error $\|e_n\|_\infty$ {\em
+always} gets arbitrarily small for large $n$, i.e.,
+$\|e_n\|_\infty \rightarrow 0$ as $n \rightarrow \infty$.
+\end{itemize}
+
+\section{Lagrange interpolation polynomial example}
+Let $x_0,\ldots, x_n$ be distinct interpolation nodes, and let
+  $$
+  p_n(x) = \sum^n_{k=0}L_{k}(x)(x_k)^j,
+  $$
+where $j$ is an integer and $n \geq j>0$. What is the $p_n(x)$ function? What are the values of $p_n(0)$ and $p_n(1)$?
+
+\section{Hermite interpolation polynomial example}
+Recall that the Hermite interpolation of a function $f$ at the points $x_0,x_1,x_2$ has the form 
+$$p(x) = \sum_{j=0}^2H_j(x)f(x_j)
++ \sum_{j=0}^2K_j(x)f'(x_j).$$ 
+  
+\subsection{}
+Show that the polynomial
+$$ -\frac{1}{\pi}x^2 + x$$ 
+is the Hermite interpolation polynomial of $f(x):=\sin(x)$ based on the nodes $x_0=0$, $x_1=\pi$.
+  
+\subsection{}
+Show that the polynomial $K_2(x)$ in
+this representation for $x_0=0,x_1=1,x_2=2$ is given by
+$$
+\frac{1}{4}x^5 - x^4 + \frac{5}{4}x^3 - \frac{1}{2}x^2.
+$$
+
+\section{Error bound for interpolation}
+This requires MATLAB or Python: we interpolate the function $f:[0,1]\to\mathbb R$ defined by
+  $f(x) = \exp(3x)$ using the nodes $x_i=i/2$, $i=0,1,2$ by a
+  quadratic polynomial $p_2\in \boldsymbol P_2$.
+ Compare the exact interpolation error $E_f(x):=f(x)-p_2(x)$ at
+ $x=3/4$ with the estimate
+  \begin{equation*}
+  |E_f(x)|\le \frac{M_{n+1}}{(n+1)!}|\pi_{n+1}(x)|,
+  \end{equation*}
+  where $M_{n+1} = \max_{z\in [0,1]}|f^{(n+1)}(z)|$, $f^{(n+1)}$ is
+  the $(n+1)$st derivative of $f$, and
+  $\pi_{n+1}(x)=(x-x_0)(x-x_1)(x-x_2)$.
+
+\vfill
+\printbibliography
+
+\end{document}
