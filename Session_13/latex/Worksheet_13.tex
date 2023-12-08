@@ -1,0 +1,95 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx,float}
+% -----------------------------------
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  linkbordercolor={0 0 1}
+}
+% -----------------------------------
+\usepackage[style=authoryear-icomp,backend=biber]{biblatex}
+\addbibresource{citation.bib}
+% -----------------------------------
+\usepackage{fancyhdr}
+\newcommand\course{MATH-UA.0252\\Numerical Analysis}
+\newcommand\hwnumber{13}                  % <-- homework number
+\newcommand\NetIDa{Ryan Sh\`iji\'e D\`u} 
+\newcommand\NetIDb{December 15th, 2023}
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Worksheet \hwnumber}}
+\rhead{\course}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+% -----------------------------------
+\usepackage{titlesec}
+\renewcommand\thesubsection{(\arabic{section}.\alph{subsection})}
+\titleformat{\subsection}[runin]
+        {\normalfont\bfseries}
+        {\thesubsection}% the label and number
+        {0.5em}% space between label/number and subsection title
+        {}% formatting commands applied just to subsection title
+        []% punctuation or other commands following subsection title
+% -----------------------------------
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.1in}
+% -----------------------------------
+\input{../../command.tex}
+\begin{document} 
+
+\item {\bf [Orthogonal polynomials on $[0,\infty)$, 2+2+2pt extra credit]}
+  \begin{enumerate}
+  \item   Find  orthogonal   polynomials  $l_0,l_1,l_2,l_3$   for  the
+    unbounded   interval  $[0,\infty)$   with   the  weight   function
+    $\omega(x)=\exp(-x)$.\footnote{Feel free to look up the values for
+      the    indefinite    integrals    $\int_0^\infty\exp(-t)t^k\,dx$
+      ($k=0,1,2,3$)---I use  Wolfram Alpha for looking  up things like
+      that:     \url{http://www.wolframalpha.com/}.}    Plot     these
+    polynomials (they are called \emph{Laguerre polynomials}).
+  \item As these are orthogonal polynomials, they correspond to a
+    quadrature rule for weighted integrals on $[0,\infty)$. The
+    resulting quadrature points and weight are given in
+    Table~\ref{tab}.
+    \begin{table}[h]\centering
+      \caption{Gauss quadrature points and weights for quadrature on
+        $[0,\infty)$.\label{tab}}
+      \begin{tabular}{ccc}
+        $n$&	$x_i$ &	$W_i$\\ \hline
+        2&0.585786&	0.853553\\
+        &3.41421&	0.146447\\ \hline
+        3	&0.415775&	0.711093\\
+        &2.29428&	0.278518\\
+        &6.28995&	0.0103893\\ \hline
+        4&	0.322548&	0.603154\\
+        &1.74576&	0.357419\\
+        &4.53662&	0.0388879\\
+        &9.39507&	0.000539295\\ \hline
+      \end{tabular}
+    \end{table}
+    Verify that for $n=2$, $n=3$, the quadrature nodes $x_i$ are the
+    roots of the polynomials $l_2(x),l_3(x)$ (up to round-off).
+  \item Use the quadrature rules from Table~\ref{tab} to approximate
+    the integrals
+    $$
+    \int_0^\infty \exp(-x) \exp(-x)\, dx \quad\text{ and }\quad \int_0^\infty \exp(-x^2)\, dx.
+    $$
+    Note that, to take into account the weight $\omega(x) = \exp(-x)$,
+    for the first integral $f(x) = \exp(-x)$ and for the second $f(x)
+    = \exp(-x^2+x)$. Report the errors for $n=2,3,4$ using that the
+    exact values for the integrals are $1/2$ and $\sqrt{\pi}/2$.
+  \end{enumerate}
+
+  
+\vfill
+\printbibliography
+
+\end{document}
